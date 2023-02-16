@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">UF5_WeatherApp_API</string>
+    <string name="hint_latitude">Latitud</string>
+    <string name="hint_longitude">Longitud</string>
+    <string name="btn_consultar">CONSULTAR TIEMPO</string>
+    <string name="tv_humedad">HUMEDAD</string>
+    <string name="tv_lluvia">LLUVIA</string>
+    <string name="no_data">Faltan datos</string>
+</resources>

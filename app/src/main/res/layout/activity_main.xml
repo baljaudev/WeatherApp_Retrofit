@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:padding="@dimen/margen_app"
+    android:background="@color/fondo">
+
+    <EditText
+        android:id="@+id/etLatitud"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:hint="@string/hint_latitude"
+        android:inputType="numberDecimal|numberSigned"/>
+
+    <EditText
+        android:id="@+id/etLongitud"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_longitude"
+        android:layout_below="@id/etLatitud"
+        android:layout_marginTop="@dimen/margen_app"
+        android:inputType="numberDecimal|numberSigned"/>
+
+    <Button
+        android:id="@+id/btnConsultar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etLongitud"
+        android:layout_marginTop="@dimen/margen_app"
+        android:text="@string/btn_consultar"
+        android:backgroundTint="@color/grey"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+</RelativeLayout>
