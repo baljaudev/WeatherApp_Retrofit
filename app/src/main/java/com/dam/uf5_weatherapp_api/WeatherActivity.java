@@ -2,6 +2,7 @@ package com.dam.uf5_weatherapp_api;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -79,21 +80,7 @@ public class WeatherActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     // Obtener el objeto WeatherRes
                     WeatherRes weatherRes = response.body();
-                    // Asignar los valores
-                    tvCiudad.setText(weatherRes.getTimezone());
-                    // Obtener el recurso del drawable con el nombre del icono de la API y asignarlo al ImageView
-                    int resourceId = getResources().getIdentifier(weatherRes.getCurrently().getIcon(), "drawable", getPackageName());
-                    ivIcono.setImageResource(resourceId);
-                    // Convertir el timestamp a fecha
-                    Date date = new Date(weatherRes.getCurrently().getTime() * 1000);
-                    // Formatear la fecha y asignarla al TextView
-                    tvHora.setText(new SimpleDateFormat("hh:mm a").format(date));
-                    // Convertir la temperatura de Fahrenheit a Celsius y asignarla al TextView con 1 decimal
-                    double tempCelcius = (weatherRes.getCurrently().getTemperature() - 32) * 5 / 9;
-                    tvTemperatura.setText(Math.round(tempCelcius*10.0)/10.0 + "ºC");
-                    tvHumedad.setText((weatherRes.getCurrently().getHumidity()*100) + "%");
-                    tvLluvia.setText((weatherRes.getCurrently().getPrecipProbability()*100) + "%");
-                    tvPrediccion.setText(weatherRes.getCurrently().getSummary());
+                    cargarDatos(weatherRes);
                 }
             }
 
@@ -102,6 +89,25 @@ public class WeatherActivity extends AppCompatActivity {
                 Log.e("ERROR", t.getMessage());
             }
         });
+    }
+
+    private void cargarDatos(WeatherRes weatherRes) {
+        // Asignar los valores
+        tvCiudad.setText(weatherRes.getTimezone());
+        // Obtener el icono y asignarlo al ImageView:
+        Drawable icono = getResources().getDrawable(weatherRes.getCurrently().getIconId(),
+                getApplicationContext().getTheme());
+        ivIcono.setImageDrawable(icono);
+        // Convertir el timestamp a fecha
+        Date date = new Date(weatherRes.getCurrently().getTime() * 1000);
+        // Formatear la fecha y asignarla al TextView
+        tvHora.setText(new SimpleDateFormat("hh:mm a").format(date));
+        // Convertir la temperatura de Fahrenheit a Celsius y asignarla al TextView con 1 decimal
+        double tempCelcius = (weatherRes.getCurrently().getTemperature() - 32) * 5 / 9;
+        tvTemperatura.setText(Math.round(tempCelcius*10.0)/10.0 + "ºC");
+        tvHumedad.setText((weatherRes.getCurrently().getHumidity()*100) + "%");
+        tvLluvia.setText((weatherRes.getCurrently().getPrecipProbability()*100) + "%");
+        tvPrediccion.setText(weatherRes.getCurrently().getSummary());
     }
 
     private boolean isNetworkAvailable() {
