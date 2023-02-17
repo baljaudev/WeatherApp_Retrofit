@@ -2,10 +2,13 @@ package com.dam.uf5_weatherapp_api;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dam.uf5_weatherapp_api.data.Location;
 import com.dam.uf5_weatherapp_api.data.WeatherRes;
@@ -23,7 +26,7 @@ import retrofit2.Retrofit;
 public class WeatherActivity extends AppCompatActivity {
 
     public static final String CLAVE_KEY = "11ce4328111023379e0fdc9d28c24a02";
-    public static final String CLAVE_EXCLUDE = "?exclude=minutely,hourly,daily,alerts,flags&lang=";
+    public static final String CLAVE_EXCLUDE = "minutely,hourly,daily,alerts,flags";
     public static final String CLAVE_LANG = "es";
 
     TextView tvCiudad;
@@ -49,8 +52,14 @@ public class WeatherActivity extends AppCompatActivity {
         tvLluvia = findViewById(R.id.tvLluvia);
         tvPrediccion = findViewById(R.id.tvPrediccion);
 
-        // Llamar al método que consume la API con los parámetros necesarios
-        consumeAPI(location.getLat(), location.getLon());
+        if (isNetworkAvailable()) {
+            // Llamar al método que consume la API con los parámetros necesarios
+            consumeAPI(location.getLat(), location.getLon());
+        } else {
+            // Mostrar un mensaje de error
+            Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void consumeAPI(Double latitud, Double longitud) {
@@ -93,5 +102,19 @@ public class WeatherActivity extends AppCompatActivity {
                 Log.e("ERROR", t.getMessage());
             }
         });
+    }
+
+    private boolean isNetworkAvailable() {
+        boolean isAvailable=false;
+        //Gestor de conectividad
+        ConnectivityManager manager = (ConnectivityManager)
+                getSystemService(WeatherActivity.CONNECTIVITY_SERVICE);
+        //Objeto que recupera la información de la red (añade permiso en el manifest)
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        //Si la información de red no es nula y estamos conectados y la red está disponible
+        if(networkInfo!=null && networkInfo.isConnected()){
+            isAvailable=true;
+        }
+        return isAvailable;
     }
 }

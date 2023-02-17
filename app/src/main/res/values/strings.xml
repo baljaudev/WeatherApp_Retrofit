@@ -6,4 +6,5 @@
     <string name="tv_humedad">HUMEDAD</string>
     <string name="tv_lluvia">LLUVIA</string>
     <string name="no_data">Faltan datos</string>
+    <string name="no_internet">No hay conexión a internet</string>
 </resources>

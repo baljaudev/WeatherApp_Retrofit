@@ -15,6 +15,6 @@ public interface APIRestServiceWeather {
             @Path("key") String key,
             @Path("latitud") double latitud,
             @Path("longitud") double longitud,
-            @Query("exclude") String exclude,
-            @Query("lang") String lang);
+            @Query("exclude") String exclude, // Va detrás de un '?param=' en la URL
+            @Query("lang") String lang); // Va detrás de un '&param=' en la URL
 }
